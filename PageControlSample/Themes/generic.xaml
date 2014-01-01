@@ -1,0 +1,43 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:pageControlSample="clr-namespace:PageControlSample">
+    <Style TargetType="pageControlSample:SimplePageIndicator">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="pageControlSample:SimplePageIndicator">
+                    <TextBlock Text="{TemplateBinding ShowText}" TextAlignment="Center"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="pageControlSample:PageControl">
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="ClipToBounds" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="pageControlSample:PageControl">
+                    <Grid>
+                        <Canvas x:Name="Container" Background="{TemplateBinding Background}">
+                            <pageControlSample:PageControlItem x:Name="Item0" ContentTemplate="{TemplateBinding ItemTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                <pageControlSample:PageControlItem.RenderTransform>
+                                    <TranslateTransform/>
+                                </pageControlSample:PageControlItem.RenderTransform>
+                            </pageControlSample:PageControlItem>
+                            <pageControlSample:PageControlItem x:Name="Item1" ContentTemplate="{TemplateBinding ItemTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                <pageControlSample:PageControlItem.RenderTransform>
+                                    <TranslateTransform/>
+                                </pageControlSample:PageControlItem.RenderTransform>
+                            </pageControlSample:PageControlItem>
+                            <pageControlSample:PageControlItem x:Name="Item2" ContentTemplate="{TemplateBinding ItemTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                <pageControlSample:PageControlItem.RenderTransform>
+                                    <TranslateTransform/>
+                                </pageControlSample:PageControlItem.RenderTransform>
+                            </pageControlSample:PageControlItem>
+                        </Canvas>
+                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Content="{TemplateBinding PageIndicator}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
