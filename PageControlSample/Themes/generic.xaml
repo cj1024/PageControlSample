@@ -13,6 +13,7 @@
     <Style TargetType="pageControlSample:PageControl">
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="ClipToBounds" Value="True"/>
+        <Setter Property="AutoPageTimeGap" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="pageControlSample:PageControl">

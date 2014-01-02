@@ -47,5 +47,12 @@
             </pageControlSample:PageControl>
         </Grid>
     </Grid>
- 
+ <phone:PhoneApplicationPage.ApplicationBar>
+     <shell:ApplicationBar>
+         <shell:ApplicationBar.Buttons>
+                <shell:ApplicationBarIconButton Text="Pre" Click="ApplicationBarIconButton_PreOnClick" IconUri="/Assets/AppBar/appbar.back.rest.png"/>
+                <shell:ApplicationBarIconButton Text="Next" Click="ApplicationBarIconButton_NextOnClick" IconUri="/Assets/AppBar/appbar.next.rest.png"/>
+            </shell:ApplicationBar.Buttons>
+     </shell:ApplicationBar>
+ </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

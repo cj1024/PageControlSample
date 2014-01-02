@@ -16,7 +16,7 @@ namespace PageControlSample
         public string ShowText
         {
             get { return (string) GetValue(ShowTextProperty); }
-            set { SetValue(ShowTextProperty, value); }
+            private set { SetValue(ShowTextProperty, value); }
         }
 
         protected override void OnCountChanged(int oldValue, int newValue)

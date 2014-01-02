@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace PageControlSample
 {
@@ -56,16 +57,37 @@ namespace PageControlSample
 
         private PageControlItem _itemPre, _itemCurrent, _itemNext;
 
+        private readonly DispatcherTimer Timer;
+
         public PageControl()
         {
             DefaultStyleKey = typeof (PageControl);
+            Loaded += PageControl_Loaded;
+            Unloaded += PageControl_Unloaded;
+            Timer = new DispatcherTimer();
+            Timer.Tick += Timer_Tick;
+        }
+
+        void PageControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateAutoPageTimer();
+        }
+
+        void PageControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Timer.Stop();
+        }
+
+        void Timer_Tick(object sender, EventArgs e)
+        {
+            PageNext();
         }
 
         #region 属性
 
         private bool GestureEnabled
         {
-            get { return Items.Count > 1; }
+            get { return Items.Count > 0; }
         }
 
         #region 依赖属性
@@ -120,7 +142,24 @@ namespace PageControlSample
 
         static void OnPageIndicatorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            //((PageControl)obj).UpdateIndicator();
+            ((PageControl)obj).UpdateIndicator();
+        }
+
+        public static readonly DependencyProperty AutoPageTimeGapProperty = DependencyProperty.Register(
+            "AutoPageTimeGap", typeof(double), typeof(PageControl), new PropertyMetadata(default(double), OnAutoPageTimeGapChanged));
+
+        /// <summary>
+        /// 自动切换页面的时间间隔，in second，小于等于0表示不刷新
+        /// </summary>
+        public double AutoPageTimeGap
+        {
+            get { return (double) GetValue(AutoPageTimeGapProperty); }
+            set { SetValue(AutoPageTimeGapProperty, value); }
+        }
+
+        static void OnAutoPageTimeGapChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            ((PageControl)obj).UpdateAutoPageTimer();
         }
 
         #endregion
@@ -266,6 +305,16 @@ namespace PageControlSample
             {
                 PageIndicator.Count = Items.Count;
                 PageIndicator.SelectedIndex = SelectedIndex;
+            }
+        }
+
+        void UpdateAutoPageTimer()
+        {
+            Timer.Stop();
+            Timer.Interval = AutoPageTimeGap>0 ? TimeSpan.FromSeconds(AutoPageTimeGap) : TimeSpan.Zero;
+            if (AutoPageTimeGap>0)
+            {
+                Timer.Start();
             }
         }
 
@@ -430,6 +479,26 @@ namespace PageControlSample
             _itemCurrent.RenderTransform = new TranslateTransform();
             _itemNext.RenderTransform = Orientation == Orientation.Horizontal ? new TranslateTransform {X = ActualWidth} : new TranslateTransform {Y = ActualHeight};
             _itemPre.RenderTransform = Orientation == Orientation.Horizontal ? new TranslateTransform {X = -ActualWidth} : new TranslateTransform {Y = -ActualHeight};
+        }
+
+        #endregion
+
+        #region 接口函数
+
+        public void PageNext()
+        {
+            if (GestureEnabled)
+            {
+                PageToCurrentPage(PageControlAnimeDirection.Next);
+            }
+        }
+
+        public void PagePre()
+        {
+            if (GestureEnabled)
+            {
+                PageToCurrentPage(PageControlAnimeDirection.Pre);
+            }
         }
 
         #endregion
