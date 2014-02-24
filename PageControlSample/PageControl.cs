@@ -162,6 +162,15 @@ namespace PageControlSample
             ((PageControl)obj).UpdateAutoPageTimer();
         }
 
+        public static readonly DependencyProperty DisableLoopingProperty = DependencyProperty.Register(
+            "DisableLooping", typeof (bool), typeof (PageControl), new PropertyMetadata(default(bool)));
+
+        public bool DisableLooping
+        {
+            get { return (bool) GetValue(DisableLoopingProperty); }
+            set { SetValue(DisableLoopingProperty, value); }
+        }
+
         #endregion
 
         #endregion
@@ -180,6 +189,13 @@ namespace PageControlSample
             if (Orientation == Orientation.Horizontal)
             {
                 var totalTranslation = e.CumulativeManipulation.Translation.X;
+                if (DisableLooping)
+                {
+                    if ((SelectedIndex == 0 && totalTranslation > 0) || (SelectedIndex == Items.Count - 1 && totalTranslation < 0))
+                    {
+                        return;
+                    }
+                }
                 if (totalTranslation > ActualWidth)
                 {
                     totalTranslation = ActualWidth;
@@ -195,6 +211,13 @@ namespace PageControlSample
             else
             {
                 var totalTranslation = e.CumulativeManipulation.Translation.Y;
+                if (DisableLooping)
+                {
+                    if ((SelectedIndex == 0 && totalTranslation > 0) || (SelectedIndex == Items.Count - 1 && totalTranslation < 0))
+                    {
+                        return;
+                    }
+                }
                 if (totalTranslation > ActualHeight)
                 {
                     totalTranslation = ActualHeight;
@@ -220,6 +243,13 @@ namespace PageControlSample
             if (Orientation == Orientation.Horizontal)
             {
                 var totalTranslation = e.TotalManipulation.Translation.X;
+                if (DisableLooping)
+                {
+                    if ((SelectedIndex == 0 && totalTranslation > 0) || (SelectedIndex == Items.Count - 1 && totalTranslation < 0))
+                    {
+                        return;
+                    }
+                }
                 if (e.IsInertial)
                 {
                     totalTranslation += CalculateTranslationWithSpeed(e.FinalVelocities.LinearVelocity.X);
@@ -244,6 +274,13 @@ namespace PageControlSample
             else
             {
                 var totalTranslation = e.TotalManipulation.Translation.Y;
+                if (DisableLooping)
+                {
+                    if ((SelectedIndex == 0 && totalTranslation > 0) || (SelectedIndex == Items.Count - 1 && totalTranslation < 0))
+                    {
+                        return;
+                    }
+                }
                 if (e.IsInertial)
                 {
                     totalTranslation += CalculateTranslationWithSpeed(e.FinalVelocities.LinearVelocity.Y);
@@ -504,4 +541,5 @@ namespace PageControlSample
         #endregion
 
     }
+
 }

@@ -3,6 +3,7 @@ using System.Windows.Controls;
 
 namespace PageControlSample
 {
+
     public abstract class PageIndicatorBase : Control
     {
 
@@ -39,4 +40,5 @@ namespace PageControlSample
         protected abstract void OnSelectedIndexChanged(int oldValue, int newValue);
 
     }
+
 }

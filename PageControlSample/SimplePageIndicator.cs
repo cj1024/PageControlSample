@@ -2,6 +2,7 @@
 
 namespace PageControlSample
 {
+
     public class SimplePageIndicator : PageIndicatorBase
     {
 
@@ -28,5 +29,6 @@ namespace PageControlSample
         {
             ShowText = string.Format("{0}/{1}", newValue + 1, Count);
         }
+
     }
 }

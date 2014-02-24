@@ -30,7 +30,7 @@
 
         <!--ContentPanel - 在此处放置其他内容-->
         <Grid x:Name="ContentPanel" Grid.Row="2" Margin="12,0,12,0">
-            <pageControlSample:PageControl Background="Red" x:Name="ThePageControl" Height="200">
+            <pageControlSample:PageControl Background="Red" x:Name="ThePageControl" Height="200" DisableLooping="True" Orientation="Vertical">
                 <pageControlSample:PageControl.PageIndicator>
                     <pageControlSample:SimplePageIndicator/>
                 </pageControlSample:PageControl.PageIndicator>
@@ -38,7 +38,7 @@
                     <DataTemplate>
                         <Border BorderBrush="White" BorderThickness="1">
                             <Border.Background>
-                                <ImageBrush ImageSource="Background.png"></ImageBrush>
+                                <ImageBrush ImageSource="Background.png"/>
                             </Border.Background>
                             <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red"/>
                         </Border>
